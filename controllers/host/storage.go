@@ -226,6 +226,8 @@ func (r *HostReconciler) ReconcilePhysicalVolumes(client *gophercloud.ServiceCli
 			size = *pvInfo.Size
 		}
 
+		pvInfo.Path = fixDevicePath(pvInfo.Path, host)
+
 		if _, ok := host.FindPhysicalVolume(group.Name, pvInfo.Type, pvInfo.Path, size); ok {
 			// Already exists.  No work required.
 			continue
